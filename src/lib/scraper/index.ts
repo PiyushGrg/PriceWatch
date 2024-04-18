@@ -60,7 +60,7 @@ export async function scrapeAmazonProduct(productUrl: string) {
 
         const category = $('#wayfinding-breadcrumbs_feature_div .a-unordered-list .a-list-item').last().text().trim();
         const reviewsCountText = $('#acrCustomerReviewText').text().trim();
-        const reviewsCount = reviewsCountText?.match(/\d+(?:,\d+)?/)?.[0].replace(/,/g, '') || 0;
+        const reviewsCount = parseInt((reviewsCountText.match(/\d+(?:,\d+)?/) || ['0'])[0].replace(/,/g, ''), 10);
         const stars = $('#acrPopover').attr('title')?.split(' ')[0] || 0;
 
         const data = {
