@@ -1,4 +1,5 @@
 "use client"
+import { scrapeAndStoreProduct } from '@/lib/actions';
 import { FormEvent, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -38,6 +39,7 @@ const Searchbar = () => {
       setIsLoading(true);
 
       // Scrape the product page
+      const product = await scrapeAndStoreProduct(searchPrompt);
     } catch (error) {
       console.log(error);
     } finally {
