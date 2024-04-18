@@ -5,6 +5,8 @@ import { connectDB } from "../dbConfig";
 import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 import Product from "@/models/productModel";
+import { User } from "@/types";
+import { generateEmailBody, sendEmail } from "../nodemailer";
 
 
 export async function scrapeAndStoreProduct(productUrl: string) {
@@ -99,5 +101,38 @@ export async function getOtherProducts(productId: string) {
     return otherProducts;
   } catch (error) {
     console.log(error);
+  }
+}
+
+
+export async function addUserEmailToProduct(productId: string, userEmail: string) {
+  try {
+    connectDB();
+
+    const product = await Product.findById(productId);
+
+    if(!product){
+      return { message: "Product not found.", status: 404}
+    };
+
+    const userExists = product.users.some((user: User) => user.email === userEmail);
+
+    if(userExists){
+      return { message: "You are already tracking this product.", status: 400}
+    }
+
+    if(!userExists) {
+      product.users.push({ email: userEmail });
+
+      await product.save();
+
+      const emailContent = await generateEmailBody(product, "WELCOME");
+
+      await sendEmail(emailContent, [userEmail]);
+
+      return { message: "You are now tracking this product.", status: 200}
+    }
+  } catch (error) {
+    return { message: "Failed to add email to product.", status: 500}
   }
 }

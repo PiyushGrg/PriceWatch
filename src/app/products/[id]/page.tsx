@@ -121,8 +121,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
 
               <p className="text-sm text-black opacity-50">
-                <span className="text-primary-green font-semibold">97%</span> of
-                buyers have recommeded this.
+                🚀Whoo!!! Your product is at <span className="text-primary-green font-semibold">{product.discountRate}%</span> off
               </p>
             </div>
           </div>
@@ -152,7 +151,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
             </div>
           </div>
 
-          <Modal />
+          <Modal productId={id} />
         </div>
       </div>
 
