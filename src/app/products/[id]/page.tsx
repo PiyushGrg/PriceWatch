@@ -1,6 +1,7 @@
+import Modal from "@/components/Modal";
 import PriceInfoCard from "@/components/PriceInfoCard";
 import ProductCard from "@/components/ProductCard";
-import { getProductById } from "@/lib/actions"
+import { getProductById, getOtherProducts } from "@/lib/actions"
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
 import Image from "next/image";
@@ -12,10 +13,12 @@ type Props = {
 }
 
 const ProductDetails = async ({ params: { id } }: Props) => {
+
   const product: Product = await getProductById(id);
 
   if(!product) redirect('/')
 
+  const otherProducts = await getOtherProducts(id); 
 
   return (
     <div className="product-container">
@@ -118,7 +121,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
 
               <p className="text-sm text-black opacity-50">
-                <span className="text-primary-green font-semibold">93% </span> of
+                <span className="text-primary-green font-semibold">97%</span> of
                 buyers have recommeded this.
               </p>
             </div>
@@ -149,6 +152,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
             </div>
           </div>
 
+          <Modal />
         </div>
       </div>
 
@@ -177,6 +181,17 @@ const ProductDetails = async ({ params: { id } }: Props) => {
         </button>
       </div>
 
+      {otherProducts && otherProducts?.length > 0 && (
+        <div className="py-14 flex flex-col gap-2 w-full">
+          <p className="section-text">Other Products</p>
+
+          <div className="flex flex-wrap gap-9 mt-7 w-full">
+            {otherProducts.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

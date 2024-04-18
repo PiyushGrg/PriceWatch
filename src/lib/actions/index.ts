@@ -79,3 +79,22 @@ export async function getAllProducts() {
     console.log(error);
   }
 }
+
+
+export async function getOtherProducts(productId: string) {
+  try {
+    connectDB();
+
+    const currentProduct = await Product.findById(productId);
+
+    if(!currentProduct) return null;
+
+    const otherProducts = await Product.find({
+      _id: { $ne: productId },
+    }).limit(4);
+
+    return otherProducts;
+  } catch (error) {
+    console.log(error);
+  }
+}
