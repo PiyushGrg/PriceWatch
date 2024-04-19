@@ -9,9 +9,10 @@ export const maxDuration = 10; // This function can run for a maximum of 10 seco
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+connectDB();
+
 export async function GET(request: Request) {
   try {
-    connectDB();
 
     const products = await Product.find({}).limit(5);
 

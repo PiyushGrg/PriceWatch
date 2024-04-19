@@ -8,10 +8,10 @@ import Product from "@/models/productModel";
 import { User } from "@/types";
 import { generateEmailBody, sendEmail } from "../nodemailer";
 
+connectDB();
 
 export async function scrapeAndStoreProduct(productUrl: string) {
 
-    connectDB();
     if(!productUrl){
         return;
     }
@@ -61,7 +61,6 @@ export async function scrapeAndStoreProduct(productUrl: string) {
 
 export async function getProductById(productId: string) {
   try {
-    connectDB();
 
     const product = await Product.findOne({ _id: productId });
 
@@ -76,7 +75,6 @@ export async function getProductById(productId: string) {
 
 export async function getAllProducts() {
   try {
-    connectDB();
 
     const products = await Product.find().sort({ createdAt: -1 });
 
@@ -89,7 +87,6 @@ export async function getAllProducts() {
 
 export async function getOtherProducts(productId: string) {
   try {
-    connectDB();
 
     const currentProduct = await Product.findById(productId);
 
@@ -108,7 +105,6 @@ export async function getOtherProducts(productId: string) {
 
 export async function addUserEmailToProduct(productId: string, userEmail: string) {
   try {
-    connectDB();
 
     const product = await Product.findById(productId);
 
