@@ -6,7 +6,7 @@ import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 import Product from "@/models/productModel";
 import { User } from "@/types";
-import { generateEmailBody, sendEmail } from "../nodemailer";
+import { generateEmailBody, sendEmail } from "../resend";
 
 connectDB();
 

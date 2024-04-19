@@ -3,7 +3,7 @@ import { getLowestPrice, getHighestPrice, getAveragePrice, getEmailNotifType } f
 import { connectDB } from "@/lib/dbConfig";
 import Product from "@/models/productModel";
 import { scrapeAmazonProduct } from "@/lib/scraper";
-import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
+import { generateEmailBody, sendEmail } from "@/lib/resend";
 
 export const maxDuration = 10; // This function can run for a maximum of 10 seconds
 export const dynamic = "force-dynamic";

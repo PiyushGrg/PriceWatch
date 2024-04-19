@@ -1,7 +1,9 @@
 "use server"
 
 import { EmailContent, EmailProductInfo, NotificationType } from '@/types';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const Notification = {
   WELCOME: 'WELCOME',
@@ -36,7 +38,7 @@ export async function generateEmailBody(
             <h3>${product.title} is back in stock!</h3>
             <p>We're excited to let you know that ${product.title} is now back in stock.</p>
             <p>Don't miss out - <a href="${product.url}" target="_blank" rel="noopener noreferrer">buy it now</a>!</p>
-            <img src="https://i.ibb.co/pwFBRMC/Screenshot-2023-09-26-at-1-47-50-AM.png" alt="Product Image" style="max-width: 100%;" />
+            <img src="https://i.ibb.co/f99jmNb/ss-piyush.png" alt="Product Image" style="max-width: 100%;" />
           </div>
           <p>Stay tuned for more updates on ${product.title} and other products you're tracking.</p>
         </div>
@@ -80,25 +82,13 @@ export async function generateEmailBody(
   return { subject, body };
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: process.env.USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-})
-
 export const sendEmail = async (emailContent: EmailContent, sendTo: string[]) => {
-  
-  const mailOptions = {
-    from: {
-      name: 'PriceWatch',
-      address: process.env.USER!,
-    },
-    to: sendTo,
-    html: emailContent.body,
-    subject: emailContent.subject,
-  }
+    const data = await resend.emails.send({
+      from: 'PriceWatch <no-reply@heapoverflow.tech>',
+      to: sendTo,
+      subject: emailContent.subject,
+      html: emailContent.body,
+    });
 
-  transporter.sendMail(mailOptions);
+    return data;
 }
