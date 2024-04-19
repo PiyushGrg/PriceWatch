@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   try {
     connectDB();
 
-    const products = await Product.find({});
+    const products = await Product.find({}).limit(5);
 
     if (!products) throw new Error("No product fetched");
 
@@ -43,7 +43,7 @@ export async function GET(request: Request) {
         // Update Products in DB
         const updatedProduct = await Product.findOneAndUpdate(
           {
-            url: product.productUrl,
+            url: product.url,
           },
           product
         );

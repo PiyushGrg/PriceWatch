@@ -104,7 +104,7 @@ const Notification = {
 
 const THRESHOLD_PERCENTAGE = 40;
 
-export const getEmailNotifType = (scrapedProduct: any,currentProduct: Product) => {
+export const getEmailNotifType = (scrapedProduct: Product,currentProduct: Product) => {
 
   const lowestPrice = getLowestPrice(currentProduct.priceHistory);
 

@@ -19,6 +19,12 @@ const Modal = ({ productId }: Props) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    let emailregex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+    if(!emailregex.test(email)){
+      toast.error('Invalid email address');
+      return;
+    }
+
     const response : any = await addUserEmailToProduct(productId, email);
 
     if(response?.status === 200) {

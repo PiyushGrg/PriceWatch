@@ -64,7 +64,7 @@ export async function scrapeAmazonProduct(productUrl: string) {
         const stars = $('#acrPopover').attr('title')?.split(' ')[0] || 0;
 
         const data = {
-            productUrl,
+            url: productUrl,
             currency: currency || '$',
             image: imageUrls[0],
             title,
