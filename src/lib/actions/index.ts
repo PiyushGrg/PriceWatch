@@ -48,6 +48,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
         );
     
         revalidatePath(`/products/${newProduct._id}`);
+        revalidatePath("/", "layout");
 
         const data = JSON.parse(JSON.stringify(newProduct))
         return data;
