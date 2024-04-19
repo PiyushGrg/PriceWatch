@@ -14,7 +14,7 @@ connectDB();
 export async function GET(request: Request) {
   try {
 
-    const products = await Product.find({}).limit(5);
+    const products = await Product.find({}).limit(3);
 
     if (!products) throw new Error("No product fetched");
 
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 
         if (!scrapedProduct) return;
 
-        const updatedPriceHistory = [
+        const updatedPriceHistory : any = [
           ...currentProduct.priceHistory,
           {
             price: scrapedProduct.currentPrice,
