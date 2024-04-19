@@ -81,10 +81,7 @@ export async function generateEmailBody(
 }
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,  // true for 465, false for other ports
+  service: 'Gmail',
   auth: {
     user: process.env.USER,
     pass: process.env.EMAIL_PASSWORD,
@@ -96,7 +93,7 @@ export const sendEmail = async (emailContent: EmailContent, sendTo: string[]) =>
   const mailOptions = {
     from: {
       name: 'PriceWatch',
-      address: process.env.EMAIL!,
+      address: process.env.USER!,
     },
     to: sendTo,
     html: emailContent.body,
