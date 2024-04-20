@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import './loader.css';
+import '@/stylesheets/loader.css';
 
 function Loading() {
     return (

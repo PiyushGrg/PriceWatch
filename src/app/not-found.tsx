@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import './notFound.css'
+import '@/stylesheets/notFound.css'
 
 const NotFound = () => {
   return (
